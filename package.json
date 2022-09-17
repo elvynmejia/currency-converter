@@ -1,0 +1,11 @@
+{
+  "name": "trunktool",
+  "version": "1.0.0",
+  "description": "currency conversion service",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Elvyn Mejia",
+  "license": "ISC"
+}
