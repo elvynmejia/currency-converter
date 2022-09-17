@@ -7,7 +7,7 @@ app.get('/health', (req, res) => {
   res.send('App running Ok!')
 });
 
-app.get('/api/v1/convert', (req, res) => {
+app.post('/api/v1/convert', (req, res) => {
   res.send({
     conversion: {
       from: '',
