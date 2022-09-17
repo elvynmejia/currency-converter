@@ -1,8 +1,12 @@
 const express = require('express')
 const app = express()
-const port = 3000
+const port = 3001
 
 // /api/v1/convert
+app.get('/health', (req, res) => {
+  res.send('App running Ok!')
+});
+
 app.get('/api/v1/convert', (req, res) => {
   res.send({
     conversion: {
