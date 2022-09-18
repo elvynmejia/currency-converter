@@ -17,7 +17,7 @@ const convert = async ({ from, to, ...payload }) => {
     const cached = await getCacheFor(EXCHANGES_RATES_CACHE);
 
     if (cached) {
-        rates = JSON.parse(cached);
+        rates = cached;
     } else {
         const tempRates = await getExchangeRates(to);
         // cache the data

@@ -58,7 +58,7 @@ const requestResponseLogger = (req, res, next) => {
             response: loggableResponse,
         };
 
-        // here you can easily log this data to something like logzio or mongo
+        // TODO: here you can easily log this data to something like logzio or mongo
         // console.log(logData);
     });
 

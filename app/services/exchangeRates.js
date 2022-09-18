@@ -10,6 +10,7 @@ const getExchangeRates = async (to) => {
         const { data } = await exchangeRates.get(`/exchange-rates?currency=${to}`);
         return data.data.rates;
     } catch (e) {
+      // TODO: throw custom error and handle it in the error handler middleware
         throw new Error('Unable to convert currency at this time.');
     }
 };

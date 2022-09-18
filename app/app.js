@@ -4,9 +4,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 
 const {
-  rateLimiter,
-  requestResponseLogger,
-  tracking
+    rateLimiter,
 } = require('./utils');
 
 const { conversionsRouter } = require('./api/v1');
@@ -18,11 +16,14 @@ const {
 } = require('./middleware/errorHandler');
 
 const basicAuth = require('./middleware/basicAuth');
-// use an appropriate logger capable of logging to something like logzio
+const tracking = require('./middleware/tracking');
+const requestResponseLogger = require('./middleware/requestResponseLogger');
+
+// TODO: use an appropriate logger capable of logging to something like logzio
 const logger = console;
 
 const app = express();
-const port = 3001;
+const port = 5000;
 
 app.use(tracking);
 app.use(rateLimiter);
@@ -32,7 +33,7 @@ app.use(morgan('combined'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// end points
+// end points definition
 app.get('/health', (req, res) => {
     res.send('App running Ok!');
 });
@@ -44,10 +45,6 @@ app.use(unauthorizedErrorHandler);
 app.use(unprocessableEntityErrorHandler);
 app.use(genericErrorHandler);
 
-if (!module.parent) {
-    app.listen(port, () => logger.log(`app listening on port ${port}!`));
-} else {
-    app.listen(process.env.PORT, () => logger.log(`app listening on port ${port}!`));
-}
+app.listen(port, () => logger.log(`app listening on port ${port}!`));
 
 module.exports = app;
