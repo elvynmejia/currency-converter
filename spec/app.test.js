@@ -25,7 +25,7 @@ describe('currency conversion service', () => {
                         amount: '999.20',
                     });
                 expect(response.status).to.equal(401);
-                expect(response.body).to.deep.eq({ errors: [], message: 'Unauthorized' })
+                expect(response.body).to.deep.eq({ errors: [], message: 'Unauthorized' });
             });
 
             it('using wrong authorization', async () => {
@@ -38,7 +38,7 @@ describe('currency conversion service', () => {
                         amount: '999.20',
                     });
                 expect(response.status).to.equal(401);
-                expect(response.body).to.deep.eq({ errors: [], message: 'Unauthorized' })
+                expect(response.body).to.deep.eq({ errors: [], message: 'Unauthorized' });
             });
         });
     });
