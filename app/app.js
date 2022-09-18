@@ -6,9 +6,11 @@ const morgan = require('morgan');
 const { conversionsRouter } = require('./api/v1');
 const {
     unprocessableEntityErrorHandler,
+    unauthorizedErrorHandler,
     genericErrorHandler,
 } = require('./middleware/errorHandler');
 
+const basicAuth = require('./middleware/basicAuth');
 // use an appropriate logger capable of logging to something like logzio
 const logger = console;
 
@@ -25,8 +27,10 @@ app.get('/health', (req, res) => {
     res.send('App running Ok!');
 });
 
+app.use(basicAuth);
 app.use('/api/v1', conversionsRouter);
 
+app.use(unauthorizedErrorHandler);
 app.use(unprocessableEntityErrorHandler);
 app.use(genericErrorHandler);
 

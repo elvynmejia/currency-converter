@@ -1,4 +1,5 @@
 const { ValidationError } = require('joi');
+const createError = require('http-errors');
 
 const unprocessableEntityErrorHandler = (err, req, res, next) => {
     if (err instanceof ValidationError) {
@@ -13,6 +14,16 @@ const unprocessableEntityErrorHandler = (err, req, res, next) => {
     return next(err);
 };
 
+const unauthorizedErrorHandler = (err, req, res, next) => {
+    if (err instanceof createError.Unauthorized) {
+        return res.status(401).json({
+            errors: [],
+            message: 'Unauthorized',
+        });
+    }
+
+    return next(err);
+};
 const genericErrorHandler = (err, req, res, next) => {
     res.status(500).json({
         errors: [],
@@ -24,5 +35,6 @@ const genericErrorHandler = (err, req, res, next) => {
 
 module.exports = {
     unprocessableEntityErrorHandler,
+    unauthorizedErrorHandler,
     genericErrorHandler,
 };
