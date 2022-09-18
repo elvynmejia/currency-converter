@@ -1,18 +1,31 @@
-const axios = require('axios');
+const {
+    connectToCache,
+    getCacheFor,
+    setCacheFor,
+} = require('./cache');
 
-const exchangeRates = axios.create({
-    baseURL: 'https://api.coinbase.com/v2',
-});
+const getExchangeRates = require('./exchangeRates');
+
+const EXCHANGES_RATES_CACHE = 'EXCHANGES_RATES_CACHE';
 
 const convert = async ({ from, to, ...payload }) => {
     let rates;
 
-    try {
-        // passing to or from to the API seems to have no effect
-        const { data } = await exchangeRates.get(`/exchange-rates?currency=${to}`);
-        rates = data.data.rates;
-    } catch (e) {
-        throw new Error('Unable to convert currency at this time.');
+    // TODO: connect at application start up time
+    await connectToCache();
+
+    const cached = await getCacheFor(EXCHANGES_RATES_CACHE);
+
+    if (cached) {
+        rates = JSON.parse(cached);
+    } else {
+        const tempRates = await getExchangeRates(to);
+        // cache the data
+        await setCacheFor(
+            EXCHANGES_RATES_CACHE,
+            tempRates,
+        );
+        rates = tempRates;
     }
 
     const amount = parseFloat(payload.amount);
