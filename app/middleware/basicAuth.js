@@ -30,7 +30,7 @@ const basicAuth = async (req, _res, next) => {
         return next(createError.Unauthorized());
     }
 
-    next();
+    return next();
 };
 
 module.exports = basicAuth;
