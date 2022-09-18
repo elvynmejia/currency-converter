@@ -1,20 +1,13 @@
-const rateLimit = require('express-rate-limit');
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const morgan = require('morgan');
 
-const { DateTime } = require('luxon-business-days');
-
-const now = DateTime.now()
-
-const rateLimiter = rateLimit({
-    windowMs: 24 * 60 * 60 * 1000, // 24 hrs in milliseconds
-    max: now.isBusinessDay() ? 100 : 200, // 100 per workday 200 on weekends
-    legacyHeaders: false,
-    standardHeaders: true,
-});
+const {
+  rateLimiter,
+  requestResponseLogger,
+  tracking
+} = require('./utils');
 
 const { conversionsRouter } = require('./api/v1');
 
@@ -31,7 +24,9 @@ const logger = console;
 const app = express();
 const port = 3001;
 
+app.use(tracking);
 app.use(rateLimiter);
+app.use(requestResponseLogger);
 app.use(cors());
 app.use(morgan('combined'));
 app.use(bodyParser.urlencoded({ extended: false }));

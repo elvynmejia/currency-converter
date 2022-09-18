@@ -27,7 +27,8 @@
     "morgan": "^1.10.0",
     "mysql2": "^2.3.3",
     "sequelize": "^6.9.0",
-    "sequelize-cli": "^6.3.0"
+    "sequelize-cli": "^6.3.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "joi": "^17.4.2",
