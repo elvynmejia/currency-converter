@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha spec/**/*.js --reporter spec --require spec/index.js --timeout 2000 --exit",
+    "noto": "mocha spec/**/*.js --require spec/index.js --no-timeout --exit",
     "start": "node app/app.js",
     "lint": "eslint app/ spec/",
     "lintfix": "eslint app/ spec/ --fix"
